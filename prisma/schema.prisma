@@ -32,3 +32,33 @@ model Session {
   refreshToken        String?
   refreshTokenExpires DateTime?
 }
+
+model ShopSettings {
+  id          String   @id @default(cuid())
+  shopDomain  String   @unique
+  plan        String   @default("free")
+  installedAt DateTime @default(now())
+}
+
+model UsageCounter {
+  id               String   @id @default(cuid())
+  shopDomain       String
+  periodStart      DateTime
+  periodEnd        DateTime
+  generationsUsed  Int      @default(0)
+  generationsLimit Int
+}
+
+model Generation {
+  id                  String    @id @default(cuid())
+  shopDomain          String
+  productId           String
+  productTitle        String?
+  promptSettings      String?   // Store JSON string
+  inputText           String?
+  outputText          String?
+  previousDescription String?
+  status              String    @default("draft") // draft, applied, discarded
+  createdAt           DateTime  @default(now())
+  appliedAt           DateTime?
+}
