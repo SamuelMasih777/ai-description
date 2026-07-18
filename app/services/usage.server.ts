@@ -31,9 +31,9 @@ export async function getMonthlyUsage(shopDomain: string) {
   });
 
   if (!usage) {
-    // Determine limit based on plan, default to 50 for free plan
+    // Determine limit based on plan, default to 5000 for free plan (test app)
     const settings = await getShopPlanDetails(shopDomain);
-    const limit = settings.plan === "free" ? 50 : 500;
+    const limit = settings.plan === "free" ? 5000 : 50000;
 
     usage = await prisma.usageCounter.create({
       data: {
